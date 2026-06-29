@@ -413,7 +413,7 @@ main(int argc, char **argv)
 	    isSN368 = (n_gh == 9) && (n_str == 1) && (n_sk == 76) &&
 			(n_ex == 11) && (n_cs == 44) && (n_ec == 99);
 	}
-	/* Sercel 408UL/428XL: manufacturer code 0x34 */
+	/* Sercel 408UL/428XL: manufacturer code 0x34, n_ec/n_ex salah dibaca */
 	if(segd_general_header_1.m[0] == 0x34) {
 	    isSN408 = 1;
 	}
@@ -421,16 +421,13 @@ main(int argc, char **argv)
 	    imp0 = 1; imp1 = 0; icvt2s = 1;
 	}
 	if(isSN408) {
-	    /* Sercel 408UL/428XL: header counts salah dibaca.
-	       Record size = 270320 bytes, sample interval 0.5ms.
-	       Struktur: 10 header blocks + 6 channel-sets * 11250 samples * 4 bytes */
-	    n_gh = 2;    /* 2 additional general header blocks */
-	    n_str = 1;   /* 1 scan type */
-	    n_cs = 6;    /* 6 channel sets */
+	    n_gh = 2;
+	    n_str = 1;
+	    n_cs = 2;   /* dari verbose: channel sets per scan type = 2 */
 	    n_sk = 0;
-	    n_ec = 0;
-	    n_ex = 0;
-	    if(ns == 0) ns = 11250;  /* samples per trace */
+	    n_ec = 0;   /* paksa nol, abaikan nilai salah dari header */
+	    n_ex = 0;   /* paksa nol */
+	    if(ns == 0) ns = 4096;
 	}
  	if(isSN358) { /* Special case for Sercel SN358 */
 	if( EXIT_FAILURE == get_gn_sn358(&segd_gen_head_sn358, tapeun) ) break;
