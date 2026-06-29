@@ -438,14 +438,6 @@ main(int argc, char **argv)
 	}
 	/* Fairfield Nodal Z-Land: manufacturer code 0x2B, atau paksa via fairfield=1 */
 	if(segd_general_header_1.m[0] == 0x2B) isFairfield = 1;
-	if(isFairfield) {
-	    /* n_ec dan n_ex dari GH1 SALAH untuk hardware ini (sama seperti SN408) */
-	    n_ec = 0;
-	    n_ex = 0;
-	    n_sk = 0;
-	    if(verbose) warn("Fairfield Nodal mode: mfg=0x%02X, n_ec/n_ex/n_sk dipaksa 0",
-			(unsigned char)segd_general_header_1.m[0]);
-	}
  	if(isSN358) { /* Special case for Sercel SN358 */
 	if( EXIT_FAILURE == get_gn_sn358(&segd_gen_head_sn358, tapeun) ) break;
 
