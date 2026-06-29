@@ -40,7 +40,7 @@ RUN make INSTALL 2>&1
 RUN cp $CWPROOT/src/su/include/*.h $CWPINCLUDE/ && \
     cp $CWPROOT/src/par/include/*.h $CWPINCLUDE/ 2>/dev/null || true
 
-# === Build libsfio.a (core sfio) ===
+# === Build libsfio.a ===
 RUN chmod +x $CWPROOT/src/Sfio/bin/iffe
 WORKDIR $CWPROOT/src/Sfio/src/lib/sfio
 RUN mkdir -p FEATURE && \
@@ -71,20 +71,13 @@ RUN ar rcs $CWPLIB/libsfio.a *.o 2>&1 && \
     cp sfio.h sfio_t.h sfio_s.h sfhdr.h $CWPINCLUDE/ && \
     cp $CWPROOT/src/Sfio/include/*.h $CWPINCLUDE/ 2>/dev/null || true
 
-# === Build libsfstdio.a (stdio bridge — provides _stdfwrite etc.)
-# Sources live in Stdio_s/, header in Stdio_s/stdio_s.h
-WORKDIR $CWPROOT/src/Sfio/src/lib/sfio/Stdio_s
-RUN cp stdio_s.h $CWPINCLUDE/ && \
-    gcc -c \
-        -I. \
-        -I.. \
-        -I$CWPINCLUDE \
-        -P -O -Dvt_threaded=0 -D_BLD_sfio \
-        stdfdopen.c stdfflush.c stdfgetc.c stdfopen.c stdfprintf.c \
-        stdfputc.c stdfread.c stdfreopen.c stdfwrite.c \
-        stdgetc.c stdgets.c stdgetw.c \
-        stdpopen.c stdprintf.c stdputc.c stdputw.c \
-        stdscanf.c stdsetvbuf.c stdsprintf.c stdtmpfile.c 2>&1 && \
+# === Build Sfstdio (stdio bridge — provides _stdfwrite etc.) ===
+WORKDIR $CWPROOT/src/Sfio/src/lib/sfstdio
+RUN gcc -c \
+    -I../sfio \
+    -I$CWPINCLUDE \
+    -P -O -Dvt_threaded=0 -D_BLD_sfio \
+    *.c 2>&1 && \
     ar rcs $CWPLIB/libsfstdio.a *.o 2>&1
 
 # === Compile segdread ===

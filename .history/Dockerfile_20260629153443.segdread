@@ -2,14 +2,11 @@
 # docker build -f Dockerfile.segdread -t segdread:latest .
 # docker run --rm -v ./034:/data -v ./output:/output segdread tape=/data/FFID_101.SEGD > output/FFID_101.sgy
 
-FROM debian:bookworm-slim AS builder
+FROM debian:bullseye-slim AS builder
 
-RUN apt-get update && \
-    for i in 1 2 3; do \
-      apt-get install -y --fix-missing \
-        git gcc make libtirpc-dev && break || sleep 10; \
-    done && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+    git gcc make libtirpc-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /src
 RUN git clone --depth 1 https://github.com/JohnWStockwellJr/SeisUnix.git
@@ -19,12 +16,12 @@ ENV CWPLIB=/src/SeisUnix/lib
 ENV CWPINCLUDE=/src/SeisUnix/include
 RUN mkdir -p $CWPROOT/lib $CWPINCLUDE $CWPROOT/bin
 
-# Makefile.config
+# Makefile.config — variabel yg dicek Makefile SeisUnix
 RUN printf 'CWPROOT=%s\nCWPLIB=%s\nCWPINCLUDE=%s\nCC=gcc\nCFLAGS=-g -I$(CWPINCLUDE)\nRANLIB=ranlib\nAR=ar\nARFLAGS=rv\nPRELFLAGS=\nPOSTLFLAGS=\nLFLAGS=\nI=%s\nL=%s\nB=%s\nXDRFLAG=\nXDRLFLAGS=\nENDIANFLAG=\nICHMODLINE=true\nMCHMODLINE=true\nITARGET=\n' \
     "$CWPROOT" "$CWPROOT/lib" "$CWPROOT/include" "$CWPROOT/include" "$CWPROOT/lib" "$CWPROOT/bin" \
     > $CWPROOT/src/Makefile.config
 
-# === Build libcwp ===
+# === Build libcwp (target: INSTALL) ===
 WORKDIR $CWPROOT/src/cwp/lib
 RUN make INSTALL 2>&1
 
@@ -36,11 +33,11 @@ RUN make INSTALL 2>&1
 WORKDIR $CWPROOT/src/su/lib
 RUN make INSTALL 2>&1
 
-# === Copy headers ===
+# === Copy semua SU/par header ke include ===
 RUN cp $CWPROOT/src/su/include/*.h $CWPINCLUDE/ && \
     cp $CWPROOT/src/par/include/*.h $CWPINCLUDE/ 2>/dev/null || true
 
-# === Build libsfio.a (core sfio) ===
+# === Build libsfio.a (skip Sfstdio — tidak dibutuhkan segdread) ===
 RUN chmod +x $CWPROOT/src/Sfio/bin/iffe
 WORKDIR $CWPROOT/src/Sfio/src/lib/sfio
 RUN mkdir -p FEATURE && \
@@ -50,7 +47,6 @@ RUN mkdir -p FEATURE && \
     $CWPROOT/src/Sfio/bin/iffe set cc gcc -I. -P -O -Dvt_threaded=0 : run features/sfio 2>&1 && \
     $CWPROOT/src/Sfio/bin/iffe set cc gcc -I. -P -O -Dvt_threaded=0 : run features/mmap 2>&1 && \
     printf '#define _SFIO_SFINIT 1\n' > FEATURE/sfinit
-
 RUN gcc -c -I. -P -O -Dvt_threaded=0 -D_BLD_sfio \
     sfclose.c sfclrlock.c sfcvt.c sfdisc.c sfdlen.c sfexcept.c \
     sfextern.c sffilbuf.c sfflsbuf.c sfprints.c sfgetd.c sfgetl.c \
@@ -66,26 +62,21 @@ RUN gcc -c -I. -P -O -Dvt_threaded=0 -D_BLD_sfio \
     _sfgetl.c _sfgetl2.c _sfgetu.c _sfgetu2.c _sfllen.c _sfopen.c \
     _sfputc.c _sfputd.c _sfputl.c _sfputm.c _sfputu.c _sfslen.c \
     _sfstacked.c _sfulen.c _sfvalue.c 2>&1
-
+# === Build libsfio.a ===
+# ... (keep your existing sfio compile step unchanged) ...
 RUN ar rcs $CWPLIB/libsfio.a *.o 2>&1 && \
     cp sfio.h sfio_t.h sfio_s.h sfhdr.h $CWPINCLUDE/ && \
     cp $CWPROOT/src/Sfio/include/*.h $CWPINCLUDE/ 2>/dev/null || true
 
-# === Build libsfstdio.a (stdio bridge — provides _stdfwrite etc.)
-# Sources live in Stdio_s/, header in Stdio_s/stdio_s.h
-WORKDIR $CWPROOT/src/Sfio/src/lib/sfio/Stdio_s
-RUN cp stdio_s.h $CWPINCLUDE/ && \
-    gcc -c \
-        -I. \
-        -I.. \
-        -I$CWPINCLUDE \
-        -P -O -Dvt_threaded=0 -D_BLD_sfio \
-        stdfdopen.c stdfflush.c stdfgetc.c stdfopen.c stdfprintf.c \
-        stdfputc.c stdfread.c stdfreopen.c stdfwrite.c \
-        stdgetc.c stdgets.c stdgetw.c \
-        stdpopen.c stdprintf.c stdputc.c stdputw.c \
-        stdscanf.c stdsetvbuf.c stdsprintf.c stdtmpfile.c 2>&1 && \
-    ar rcs $CWPLIB/libsfstdio.a *.o 2>&1
+# === Stub out _stdfwrite (missing from Sfstdio which we skip) ===
+RUN printf '#include "sfhdr.h"\n\
+ssize_t _stdfwrite(const void* buf, size_t size, size_t n, Sfio_t* f)\n\
+{ return (ssize_t)sfwrite(f, buf, size*n); }\n' \
+    > /tmp/stdfwrite_stub.c && \
+    gcc -c -I$CWPINCLUDE -I$CWPROOT/src/Sfio/src/lib/sfio \
+        -I. -P -O -Dvt_threaded=0 \
+        /tmp/stdfwrite_stub.c -o /tmp/stdfwrite_stub.o && \
+    ar rcs $CWPLIB/libsfio.a /tmp/stdfwrite_stub.o
 
 # === Compile segdread ===
 WORKDIR $CWPROOT/src/Sfio/main
@@ -96,15 +87,12 @@ RUN gcc -g \
     -I$CWPROOT/src/Sfio/include \
     -I/usr/include/tirpc \
     segdread.c \
-    -L$CWPLIB -lsu -lpar -lcwp -lsfstdio -lsfio -lm -ltirpc \
+    -L$CWPLIB -lsu -lpar -lcwp -lsfio -lm -ltirpc \
     -o $CWPROOT/bin/segdread 2>&1
 
 # === Runtime stage ===
-FROM debian:bookworm-slim
-RUN apt-get update && \
-    apt-get install -y --fix-missing libtirpc3 && \
-    rm -rf /var/lib/apt/lists/*
-
+FROM debian:bullseye-slim
+RUN apt-get update && apt-get install -y libtirpc3 && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /src/SeisUnix/bin/segdread /usr/local/bin/
 RUN chmod +x /usr/local/bin/segdread
 WORKDIR /data
