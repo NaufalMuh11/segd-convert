@@ -15,7 +15,7 @@ WORKDIR /src
 RUN git clone --depth 1 https://github.com/JohnWStockwellJr/SeisUnix.git
 
 # Overwrite segdread.c with local patched version
-COPY SeisUnix/src/Sfio/main/segdread.c /src/SeisUnix/src/Sfio/main/segdread.c
+COPY segdread.c /src/SeisUnix/src/Sfio/main/segdread.c
 
 ENV CWPROOT=/src/SeisUnix
 ENV CWPLIB=/src/SeisUnix/lib
