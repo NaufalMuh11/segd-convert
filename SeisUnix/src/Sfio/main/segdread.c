@@ -413,8 +413,8 @@ main(int argc, char **argv)
 	    isSN368 = (n_gh == 9) && (n_str == 1) && (n_sk == 76) &&
 			(n_ex == 11) && (n_cs == 44) && (n_ec == 99);
 	}
-	/* Sercel 408UL/428XL: manufacturer code 0x99 at byte 0x0A (yr field) */
-	if(segd_general_header_1.yr == 0x99) {
+	/* Sercel 408UL/428XL: manufacturer code 0x34 */
+	if(segd_general_header_1.m[0] == 0x34) {
 	    isSN408 = 1;
 	}
 	if(isSN358 || isSN368) { /* repair byte swap of MP gain */
