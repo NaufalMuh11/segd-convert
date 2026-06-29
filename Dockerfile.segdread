@@ -45,7 +45,8 @@ RUN mkdir -p FEATURE && \
     ln -sf FEATURE/common ast_common.h && \
     $CWPROOT/src/Sfio/bin/iffe set cc gcc -I. -P -O -Dvt_threaded=0 : run features/float 2>&1 && \
     $CWPROOT/src/Sfio/bin/iffe set cc gcc -I. -P -O -Dvt_threaded=0 : run features/sfio 2>&1 && \
-    $CWPROOT/src/Sfio/bin/iffe set cc gcc -I. -P -O -Dvt_threaded=0 : run features/mmap 2>&1
+    $CWPROOT/src/Sfio/bin/iffe set cc gcc -I. -P -O -Dvt_threaded=0 : run features/mmap 2>&1 && \
+    $CWPROOT/src/Sfio/bin/iffe set cc gcc -I. -P -O -Dvt_threaded=0 : run features/sfinit 2>&1
 RUN gcc -c -I. -P -O -Dvt_threaded=0 -D_BLD_sfio \
     sfclose.c sfclrlock.c sfcvt.c sfdisc.c sfdlen.c sfexcept.c \
     sfextern.c sffilbuf.c sfflsbuf.c sfprints.c sfgetd.c sfgetl.c \
