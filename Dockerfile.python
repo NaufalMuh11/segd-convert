@@ -1,0 +1,9 @@
+FROM python:3.11-slim
+
+RUN pip install --no-cache-dir obspy
+
+RUN mkdir -p /data /output /scripts
+COPY convert_fairfield.py /scripts/convert_fairfield.py
+
+WORKDIR /data
+CMD ["python", "/scripts/convert_fairfield.py"]
