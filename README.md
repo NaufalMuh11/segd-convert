@@ -25,8 +25,8 @@ No Python installation or programming experience is required.
 To run the source code or build the executable manually:
 
 ```bash
-git clone https://github.com/NaufalMuh11/<your-new-repo-name>.git
-cd <your-new-repo-name>
+git clone https://github.com/NaufalMuh11/segd-shifter.git
+cd segd-shifter
 ```
 *(Requires Python 3.8+)*
 
