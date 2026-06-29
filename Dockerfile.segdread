@@ -12,7 +12,9 @@ WORKDIR /src
 RUN git clone --depth 1 https://github.com/JohnWStockwellJr/SeisUnix.git
 
 ENV CWPROOT=/src/SeisUnix
-RUN mkdir -p $CWPROOT/lib $CWPROOT/include $CWPROOT/bin
+ENV CWPLIB=/src/SeisUnix/lib
+ENV CWPINCLUDE=/src/SeisUnix/include
+RUN mkdir -p $CWPROOT/lib $CWPINCLUDE $CWPROOT/bin
 
 # Makefile.config — variabel yg dicek Makefile SeisUnix
 RUN printf 'CWPROOT=%s\nCWPLIB=%s\nCWPINCLUDE=%s\nCC=gcc\nCFLAGS=-g -I$(CWPINCLUDE)\nRANLIB=ranlib\nAR=ar\nARFLAGS=rv\nPRELFLAGS=\nPOSTLFLAGS=\nLFLAGS=\nI=%s\nL=%s\nB=%s\nXDRFLAG=\nXDRLFLAGS=\nENDIANFLAG=\nICHMODLINE=true\nMCHMODLINE=true\nITARGET=\n' \
@@ -30,6 +32,10 @@ RUN make INSTALL 2>&1
 # === Build libsu ===
 WORKDIR $CWPROOT/src/su/lib
 RUN make INSTALL 2>&1
+
+# === Copy semua SU/par header ke include ===
+RUN cp $CWPROOT/src/su/include/*.h $CWPINCLUDE/ && \
+    cp $CWPROOT/src/par/include/*.h $CWPINCLUDE/ 2>/dev/null || true
 
 # === Build libsfio.a (skip Sfstdio — tidak dibutuhkan segdread) ===
 RUN chmod +x $CWPROOT/src/Sfio/bin/iffe
