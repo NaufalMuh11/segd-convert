@@ -4,32 +4,32 @@ import os
 import re
 
 def create_ebcdic_header(ascii_text):
-    # Buat 3200 byte spasi EBCDIC (0x40)
+    # Create 3200 bytes of EBCDIC spaces (0x40)
     ebcdic = bytearray(b'\x40' * 3200)
     
-    # Bersihkan teks ASCII dari null bytes
+    # Clean ASCII text from null bytes
     clean_text = ''.join([chr(b) if 32 <= b <= 126 else ' ' for b in ascii_text])
-    clean_text = ' '.join(clean_text.split()) # Hapus spasi berlebih
+    clean_text = ' '.join(clean_text.split()) # Remove extra spaces
     
-    # Masukkan info ekstraksi ke baris pertama Text Header
+    # Insert extraction info into the first line of the Text Header
     info_str = f"C 1 CONVERTED FROM SEGD. META: {clean_text[:300]}"
     
     try:
-        encoded = info_str.encode('cp500') # Encode ke EBCDIC
+        encoded = info_str.encode('cp500') # Encode to EBCDIC
         ebcdic[:len(encoded)] = encoded
     except:
         pass
     return ebcdic
 
 def convert_segd_to_segy(input_file, output_file, offset=6048, num_traces=504, ns=4096, dt=2000):
-    print(f"Membaca {input_file} (Mengekstrak format 8015 mentah)...")
+    print(f"Reading {input_file} (Extracting raw 8015 format)...")
     
     with open(input_file, 'rb') as f_in, open(output_file, 'wb') as f_out:
-        # Ekstrak Metadata dari 2048 byte pertama SEGD
+        # Extract Metadata from the first 2048 bytes of SEGD
         raw_header = f_in.read(2048)
         ascii_text = [b for b in raw_header if 32 <= b <= 126]
         
-        # Ekstrak Koordinat & FFID dengan Regex
+        # Extract Coordinates & FFID with Regex
         text_str = ''.join(chr(b) for b in ascii_text)
         ffid = 1
         easting = 0
@@ -50,10 +50,10 @@ def convert_segd_to_segy(input_file, output_file, offset=6048, num_traces=504, n
             minute = int(match_time.group(2))
             second = int(match_time.group(3))
             
-        # 1. Tulis 3200-byte Text Header (EBCDIC format)
+        # 1. Write 3200-byte Text Header (EBCDIC format)
         f_out.write(create_ebcdic_header(raw_header[352:1500]))
         
-        # 2. Tulis 400-byte Binary Header
+        # 2. Write 400-byte Binary Header
         bin_hdr = bytearray(400)
         struct.pack_into('>i', bin_hdr, 0, 1)      # Job ID
         struct.pack_into('>i', bin_hdr, 8, ffid)   # Line / FFID
@@ -62,11 +62,11 @@ def convert_segd_to_segy(input_file, output_file, offset=6048, num_traces=504, n
         struct.pack_into('>h', bin_hdr, 24, 5)     # 5 = IEEE Float
         f_out.write(bin_hdr)
 
-        # Lewati header teks yang kacau (6048 byte)
+        # Skip messy text header (6048 bytes)
         f_in.seek(offset)
         
         for t in range(num_traces):
-            # Baca 20 byte Trace Header
+            # Read 20-byte Trace Header
             tr_hdr = f_in.read(20)
             if len(tr_hdr) < 20:
                 break
@@ -76,19 +76,19 @@ def convert_segd_to_segy(input_file, output_file, offset=6048, num_traces=504, n
             if tracl == 0:
                 tracl = t + 1
             
-            # Buat 240 byte SEG-Y trace header
+            # Create 240-byte SEG-Y trace header
             segy_hdr = bytearray(240)
-            struct.pack_into('>i', segy_hdr, 0, t+1) # Trace seq dalam baris (byte 1-4)
-            struct.pack_into('>i', segy_hdr, 4, tracl) # Trace seq dalam reel (byte 5-8)
+            struct.pack_into('>i', segy_hdr, 0, t+1) # Trace seq within line (byte 1-4)
+            struct.pack_into('>i', segy_hdr, 4, tracl) # Trace seq within reel (byte 5-8)
             struct.pack_into('>i', segy_hdr, 8, ffid) # Field Record / Shot Point Number (byte 9-12)
-            struct.pack_into('>i', segy_hdr, 12, tracl) # Trace num within record / **Channel Number** (byte 13-16)
-            struct.pack_into('>i', segy_hdr, 16, ffid) # Energy Source Point (sering disamakan dgn Shot/FFID) (byte 17-20)
-            struct.pack_into('>i', segy_hdr, 24, tracl) # Trace number within ensemble (sering dibaca sbg Channel) (byte 25-28)
+            struct.pack_into('>i', segy_hdr, 12, tracl) # Trace num within record / Channel Number (byte 13-16)
+            struct.pack_into('>i', segy_hdr, 16, ffid) # Energy Source Point (often identical to Shot/FFID) (byte 17-20)
+            struct.pack_into('>i', segy_hdr, 24, tracl) # Trace number within ensemble (often read as Channel) (byte 25-28)
             
             struct.pack_into('>h', segy_hdr, 28, 1) # Trace ID (1 = Seismic Data)
             
-            # Koordinat X dan Y (Easting / Northing)
-            struct.pack_into('>h', segy_hdr, 70, -10) # Scalar multiplier (bagi 10 karena kita kali 10 sebelumnya)
+            # X and Y Coordinates (Easting / Northing)
+            struct.pack_into('>h', segy_hdr, 70, -10) # Scalar multiplier (divide by 10 because we multiplied by 10 previously)
             struct.pack_into('>i', segy_hdr, 72, easting)  # Source X
             struct.pack_into('>i', segy_hdr, 76, northing) # Source Y
             struct.pack_into('>i', segy_hdr, 80, easting)  # Receiver X
@@ -99,21 +99,21 @@ def convert_segd_to_segy(input_file, output_file, offset=6048, num_traces=504, n
             struct.pack_into('>h', segy_hdr, 114, ns)  # Samples
             struct.pack_into('>h', segy_hdr, 116, dt)  # Interval
             
-            # Waktu Perekaman (Recording Time)
-            struct.pack_into('>h', segy_hdr, 156, 1999) # Tahun (dari string 99/01/08)
-            struct.pack_into('>h', segy_hdr, 158, 8)    # Hari dalam setahun (Julian day 8 = 8 Januari)
+            # Recording Time
+            struct.pack_into('>h', segy_hdr, 156, 1999) # Year (from string 99/01/08)
+            struct.pack_into('>h', segy_hdr, 158, 8)    # Day of year (Julian day 8 = Jan 8)
             struct.pack_into('>h', segy_hdr, 160, hour)
             struct.pack_into('>h', segy_hdr, 162, minute)
             struct.pack_into('>h', segy_hdr, 164, second)
             
             f_out.write(segy_hdr)
             
-            # Baca data 20-bit format 8015 (10 byte per 4 sampel)
+            # Read 20-bit format 8015 data (10 bytes per 4 samples)
             data_bytes = f_in.read((ns // 4) * 10)
             if len(data_bytes) < (ns // 4) * 10:
                 break
                 
-            # Decode 20-bit ke 32-bit IEEE float
+            # Decode 20-bit to 32-bit IEEE float
             floats = []
             for i in range(0, len(data_bytes), 10):
                 block = data_bytes[i:i+10]
@@ -148,11 +148,11 @@ def convert_segd_to_segy(input_file, output_file, offset=6048, num_traces=504, n
             # Pack as 32-bit floats
             f_out.write(struct.pack(f'>{ns}f', *floats))
 
-        print(f"Selesai! {t+1} trace berhasil dikonversi secara langsung ke {output_file} (SEG-Y Standar)")
+        print(f"Done! {t+1} traces successfully converted directly to {output_file} (Standard SEG-Y)")
 
 if __name__ == '__main__':
     if len(sys.argv) < 3:
-        print("Penggunaan: python segd2segy.py <input.SEGD> <output.sgy>")
+        print("Usage: python segd2segy.py <input.SEGD> <output.sgy>")
         sys.exit(1)
         
     input_file = sys.argv[1]
