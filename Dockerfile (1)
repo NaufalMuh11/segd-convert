@@ -1,0 +1,92 @@
+# ============================================================
+# SeisUnix Docker Image — dengan segdread
+# Base: Ubuntu 16.04
+# ============================================================
+
+FROM ubuntu:16.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV CWPROOT=/opt/cwp/SeisUnix
+ENV PATH=$PATH:/opt/cwp/SeisUnix/bin
+
+# ------------------------------------------------------------
+# 1. Install dependencies
+# ------------------------------------------------------------
+RUN apt-get update && apt-get install -y \
+    git make gcc g++ gfortran \
+    libx11-dev libxt-dev libxmu-dev libxi-dev \
+    freeglut3-dev libmotif-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# ------------------------------------------------------------
+# 2. Clone SeisUnix
+# ------------------------------------------------------------
+RUN mkdir -p /opt/cwp && \
+    git clone --depth=1 https://github.com/JohnWStockwellJr/SeisUnix.git $CWPROOT
+
+# ------------------------------------------------------------
+# 3. Bypass license
+# ------------------------------------------------------------
+RUN touch $CWPROOT/src/LICENSE_45R00_ACCEPTED && \
+    mkdir -p $CWPROOT/bin $CWPROOT/lib $CWPROOT/include
+
+# ------------------------------------------------------------
+# 4. Compile core SU (segyread, sufilter, dll)
+# ------------------------------------------------------------
+WORKDIR $CWPROOT/src
+RUN yes | make install || true
+
+# ------------------------------------------------------------
+# 5. Feature detection untuk Sfio
+# ------------------------------------------------------------
+WORKDIR $CWPROOT/src/Sfio/src/lib/sfio
+RUN mkdir -p FEATURE && \
+    ../../../bin/iffe - set cc cc -O : run features/common > ast_common.h && \
+    ../../../bin/iffe set cc cc -I. -P -O -Dvt_threaded=0 : run features/common && \
+    ../../../bin/iffe set cc cc -I. -P -O -Dvt_threaded=0 : run features/float && \
+    ../../../bin/iffe set cc cc -I. -P -O -Dvt_threaded=0 : run features/sfio && \
+    ../../../bin/iffe - set cc cc -I. -P -O -Dvt_threaded=0 : run features/stdio_lcl > FEATURE/stdio.lcl && \
+    ../../../bin/iffe set cc cc -I. -P -O -Dvt_threaded=0 : run features/mmap
+
+# ------------------------------------------------------------
+# 6. Compile libsfio.a (skip Stdio_s dan Stdio_b yang bermasalah)
+# ------------------------------------------------------------
+RUN for f in sf*.c _sf*.c; do \
+      cc -c -I. -P -O -Dvt_threaded=0 $f 2>/dev/null || true; \
+    done && \
+    ar cr $CWPROOT/lib/libsfio.a *.o && \
+    ranlib $CWPROOT/lib/libsfio.a
+
+# ------------------------------------------------------------
+# 7. Tambah stub _stdfwrite (pengganti Stdio_s)
+# ------------------------------------------------------------
+RUN printf '#include <stdio.h>\n#include <stddef.h>\nsize_t _stdfwrite(const void *ptr, size_t size, size_t nmemb, void *stream) {\n    return fwrite(ptr, size, nmemb, (FILE*)stream);\n}\n' \
+    > /tmp/sfio_stub.c && \
+    cc -O -c /tmp/sfio_stub.c -o /tmp/sfio_stub.o && \
+    ar r $CWPROOT/lib/libsfio.a /tmp/sfio_stub.o && \
+    ranlib $CWPROOT/lib/libsfio.a
+
+# ------------------------------------------------------------
+# 8. Copy header Sfio
+# ------------------------------------------------------------
+RUN cp $CWPROOT/src/Sfio/src/lib/sfio/sfio.h $CWPROOT/include/ 2>/dev/null || true && \
+    cp $CWPROOT/src/Sfio/include/*.h $CWPROOT/include/ 2>/dev/null || true
+
+# ------------------------------------------------------------
+# 9. Compile segdread
+# ------------------------------------------------------------
+WORKDIR $CWPROOT/src/Sfio/main
+RUN gcc -I$CWPROOT/include \
+    -I$CWPROOT/src/Sfio/src/lib/sfio \
+    -O segdread.c \
+    -L$CWPROOT/lib \
+    -lsfio -lsu -lpar -lcwp -lm \
+    -o $CWPROOT/bin/segdread && \
+    echo "segdread installed successfully!"
+
+# ------------------------------------------------------------
+# 10. Direktori kerja
+# ------------------------------------------------------------
+RUN mkdir -p /data /output
+WORKDIR /data
+CMD ["/bin/bash"]

@@ -1,0 +1,1080 @@
+
+segdread: ptmax set to ptmin for verbose=2
+
+segdread: tape opened successfully
+
+segdread: nsamp_hdr1=4097
+
+
+segdread: 
+********************************
+segd_general_header_1 (32 bytes)
+********************************
+
+segdread: file number: 101
+
+segdread: 		format code: 8015
+
+
+segdread: general constants K1-K12 not decoded
+
+segdread: 		year: 99
+
+
+segdread: #blks in general header extension: 0
+
+
+segdread: day: 08
+
+segdread: 		hour: 18
+
+segdread: 		minute: 16
+
+segdread: 		second: 18
+
+
+segdread: manufacturer s code: 34
+
+segdread: 		manufacturer's serial number: 0001
+
+
+segdread: bytes per scan (multiplexed formats) : not decoded
+
+segdread: 		base scan interval: 2000 microseconds
+
+
+segdread: polarity: 1
+
+segdread: 		scan/block: 0 x 2 **16
+
+
+segdread: record type (8=normal record) : 8
+
+segdread: 		record length: 80 units
+
+
+segdread: scan types / records: 1
+
+segdread: 		channel sets per scan type: 2
+
+
+segdread: number of 32-bytes fields for sample skew: 0
+
+
+segdread: extended header length: 9
+
+segdread: 		external header length: 49
+
+
+segdread: 
+**********************************
+segd_channel_set_header (32 bytes)
+**********************************
+
+
+segdread: scan type number:  1
+
+segdread: 	channel set number:  1
+
+
+segdread: channel set start time: 0
+
+segdread: 	channel set end time: 8192
+
+
+segdread: descale multiplier: 008c
+
+
+segdread: number of channels: 0480
+
+segdread: 	channel type (1=Seis, 8=Sig/unfiltered): 1
+
+
+segdread: sample/channel: 0
+
+segdread: 	channel gain: 9
+
+
+segdread: alias filter frequency: 0218
+
+segdread: 	alias filter slope: 0484
+
+
+segdread: low cut filter frequency: 0003
+
+segdread: 	low cut filter slope: 0006
+
+
+segdread: first notch filter: 0000
+
+segdread: 	second: 0000
+
+segdread: 	third: 0000
+
+
+segdread: extended channel set number: 0000
+
+segdread: 	extended header flag: 0
+
+
+segdread: vertical stack:  0
+
+
+segdread: streamer cable number:  0
+
+segdread: 	array forming:  0
+
+
+segdread: 
+**********************************
+segd_channel_set_header (32 bytes)
+**********************************
+
+
+segdread: scan type number:  1
+
+segdread: 	channel set number:  2
+
+
+segdread: channel set start time: 0
+
+segdread: 	channel set end time: 8192
+
+
+segdread: descale multiplier: 008c
+
+
+segdread: number of channels: 0024
+
+segdread: 	channel type (1=Seis, 8=Sig/unfiltered): 1
+
+
+segdread: sample/channel: 0
+
+segdread: 	channel gain: 9
+
+
+segdread: alias filter frequency: 0218
+
+segdread: 	alias filter slope: 0484
+
+
+segdread: low cut filter frequency: 0003
+
+segdread: 	low cut filter slope: 0006
+
+
+segdread: first notch filter: 0000
+
+segdread: 	second: 0000
+
+segdread: 	third: 0000
+
+
+segdread: extended channel set number: 0000
+
+segdread: 	extended header flag: 0
+
+
+segdread: vertical stack:  0
+
+
+segdread: streamer cable number:  0
+
+segdread: 	array forming:  0
+
+
+segdread: 
+**********************************
+segd_extended_header (32 bytes)
+**********************************
+
+
+segdread: 01 02 04 80
+
+
+segdread: 00 24 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 31
+
+
+segdread: 31 01 28 02
+
+
+segdread: 
+**********************************
+segd_extended_header (32 bytes)
+**********************************
+
+
+segdread: 4d 44 44 39
+
+
+segdread: 38 33 34 20
+
+
+segdread: 41 55 58 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 
+**********************************
+segd_extended_header (32 bytes)
+**********************************
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 31 36 38 39
+
+
+segdread: 20 20 20 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 
+**********************************
+segd_extended_header (32 bytes)
+**********************************
+
+
+segdread: 20 54 47 53
+
+
+segdread: 20 4e 4f 50
+
+
+segdread: 45 43 20 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 20 54 47 53
+
+
+segdread: 20 4e 4f 50
+
+
+segdread: 45 43 20 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 
+**********************************
+segd_extended_header (32 bytes)
+**********************************
+
+
+segdread: 00 01 00 00
+
+
+segdread: 00 01 00 00
+
+
+segdread: 00 01 00 00
+
+
+segdread: 00 01 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 
+**********************************
+segd_extended_header (32 bytes)
+**********************************
+
+
+segdread: 00 81 92 00
+
+
+segdread: 81 92 32 76
+
+
+segdread: 80 32 76 80
+
+
+segdread: 00 00 10 00
+
+
+segdread: 00 01 01 52
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 50 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 
+**********************************
+segd_extended_header (32 bytes)
+**********************************
+
+
+segdread: 20 20 20 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 
+**********************************
+segd_extended_header (32 bytes)
+**********************************
+
+
+segdread: 00 81 92 00
+
+
+segdread: 81 92 01 63
+
+
+segdread: 84 01 63 84
+
+
+segdread: 00 00 20 00
+
+
+segdread: 00 02 02 52
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 49 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 
+**********************************
+segd_extended_header (32 bytes)
+**********************************
+
+
+segdread: 20 20 20 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 20 20 20 20
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 00 00 00 00
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3138 3a31 363a 3233 2045 563a 2020 3130
+
+
+segdread: 3138 3a31 363a 3233 2045 563a 2020 3130
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3a20 3938 3131 3639 322e 3920 443a 2020
+
+
+segdread: 3a20 3938 3131 3639 322e 3920 443a 2020
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 473a 2035 2e31 2043 4d47 3a20 3136 2e36
+
+
+segdread: 473a 2035 2e31 2043 4d47 3a20 3136 2e36
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2020 3137 2e35 2039 3939 2e39 2020 3137
+
+
+segdread: 2020 3137 2e35 2039 3939 2e39 2020 3137
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3939 2e39 2020 3137 2e38 2039 3939 2e39
+
+
+segdread: 3939 2e39 2020 3137 2e38 2039 3939 2e39
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2e38 2039 3939 2e39 2020 3136 2e33 2039
+
+
+segdread: 2e38 2039 3939 2e39 2020 3136 2e33 2039
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2020 3135 2e35 2039 3939 2e39 2020 3133
+
+
+segdread: 2020 3135 2e35 2039 3939 2e39 2020 3133
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3131 2e33 2020 2030 2e30 2020 2030 2e30
+
+
+segdread: 3131 2e33 2020 2030 2e30 2020 2030 2e30
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2e30 2020 2030 2e30 2020 2030 2e30 2020
+
+
+segdread: 2e30 2020 2030 2e30 2020 2030 2e30 2020
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2020 2037 2e31 2020 2037 2e31 2020 2037
+
+
+segdread: 2020 2037 2e31 2020 2037 2e31 2020 2037
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2037 2e31 2020 2037 2e30 2020 2037 2e30
+
+
+segdread: 2037 2e31 2020 2037 2e30 2020 2037 2e30
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2e30 2020 2037 2e31 2020 2037 2e31 2020
+
+
+segdread: 2e30 2020 2037 2e31 2020 2037 2e31 2020
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2020 2037 2e31 2020 2036 2e39 2020 2037
+
+
+segdread: 2020 2037 2e31 2020 2036 2e39 2020 2037
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2037 2e30 2020 3333 2e31 2020 2030 2e30
+
+
+segdread: 2037 2e30 2020 3333 2e31 2020 2030 2e30
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2e30 2020 2030 2e30 2020 2030 2e30 2020
+
+
+segdread: 2e30 2020 2030 2e30 2020 2030 2e30 2020
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3930 3130 3736 204d 4444 3938 3334 2020
+
+
+segdread: 3930 3130 3736 204d 4444 3938 3334 2020
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2f30 383a 3138 3a31 363a 3230 3134 3434
+
+
+segdread: 2f30 383a 3138 3a31 363a 3230 3134 3434
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2030 2e30 3130 2e30 3339 2020 2020 3139
+
+
+segdread: 2030 2e30 3130 2e30 3339 2020 2020 3139
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3030 3030 3030 3331 415a 314e 2030 3030
+
+
+segdread: 3030 3030 3030 3331 415a 314e 2030 3030
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 314e 2030 3030 3130 3334 3934 2d30 3630
+
+
+segdread: 314e 2030 3030 3130 3334 3934 2d30 3630
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3939 2d30 3130 3030 3334 415a 314e 2030
+
+
+segdread: 3939 2d30 3130 3030 3334 415a 314e 2030
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 415a 314e 2030 3030 3037 3834 3939 2d30
+
+
+segdread: 415a 314e 2030 3030 3037 3834 3939 2d30
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3535 3030 3030 3130 3030 3337 415a 314e
+
+
+segdread: 3535 3030 3030 3130 3030 3337 415a 314e
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3338 415a 314e 2030 3030 3130 3635 3030
+
+
+segdread: 3338 415a 314e 2030 3030 3130 3635 3030
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3130 3135 3032 3030 3330 3030 3430 415a
+
+
+segdread: 3130 3135 3032 3030 3330 3030 3430 415a
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3030 3434 535a 314e 2030 3030 3038 3830
+
+
+segdread: 3030 3434 535a 314e 2030 3030 3038 3830
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3030 3039 3835 3030 3030 3030 3030 3232
+
+
+segdread: 3030 3039 3835 3030 3030 3030 3030 3232
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3030 3030 3233 415a 314e 2030 3030 3037
+
+
+segdread: 3030 3030 3233 415a 314e 2030 3030 3037
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2030 3030 3037 3334 3939 2d30 3130 3030
+
+
+segdread: 2030 3030 3037 3334 3939 2d30 3130 3030
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3030 3230 3030 3236 415a 314e 2030 3030
+
+
+segdread: 3030 3230 3030 3236 415a 314e 2030 3030
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 314e 2030 3030 3038 3835 3030 3030 3130
+
+
+segdread: 314e 2030 3030 3038 3835 3030 3030 3130
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3939 2d30 3130 3030 3239 415a 314e 2030
+
+
+segdread: 3939 2d30 3130 3030 3239 415a 314e 2030
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 415a 314e 2030 3030 3039 3335 3030 3030
+
+
+segdread: 415a 314e 2030 3030 3039 3335 3030 3030
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3830 3030 3030 3030 3030 3131 415a 314e
+
+
+segdread: 3830 3030 3030 3030 3030 3131 415a 314e
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3132 415a 314e 2030 3030 3130 3034 3937
+
+
+segdread: 3132 415a 314e 2030 3030 3130 3034 3937
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3037 3535 3035 3030 3530 3030 3134 415a
+
+
+segdread: 3037 3535 3035 3030 3530 3030 3134 415a
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3030 3135 415a 314e 2030 3030 3037 3035
+
+
+segdread: 3030 3135 415a 314e 2030 3030 3037 3035
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3030 3037 3035 3032 3030 3330 3030 3137
+
+
+segdread: 3030 3037 3035 3032 3030 3330 3030 3137
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3230 3030 3439 415a 314e 2030 3030 3038
+
+
+segdread: 3230 3030 3439 415a 314e 2030 3030 3038
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2030 3030 3039 3835 3030 3030 3130 3030
+
+
+segdread: 2030 3030 3039 3835 3030 3030 3130 3030
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 2d30 3130 3030 3432 535a 314e 2030 3030
+
+
+segdread: 2d30 3130 3030 3432 535a 314e 2030 3030
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 314e 2030 3030 3131 3134 3939 2d30 3130
+
+
+segdread: 314e 2030 3030 3131 3134 3939 2d30 3130
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3935 2d30 3530 3736 3033 415a 314e 2030
+
+
+segdread: 3935 2d30 3530 3736 3033 415a 314e 2030
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 415a 314e 2030 3030 3038 3035 3030 3030
+
+
+segdread: 415a 314e 2030 3030 3038 3035 3030 3030
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3535 3030 3030 3030 3030 3036 415a 314e
+
+
+segdread: 3535 3030 3030 3030 3030 3036 415a 314e
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3037 415a 314e 2030 3030 3037 3335 3032
+
+
+segdread: 3037 415a 314e 2030 3030 3037 3335 3032
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3039 3535 3030 3030 3030 3030 3039 415a
+
+
+segdread: 3039 3535 3030 3030 3030 3030 3039 415a
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3030 3130 415a 314e 2030 3030 3039 3034
+
+
+segdread: 3030 3130 415a 314e 2030 3030 3039 3034
+
+
+segdread: 
+*******************************
+segd_external_header (32 bytes)
+*******************************
+
+
+segdread: 3030 3039 3830 3030 3030 3030 3030 0d0a
+
+
+segdread: 3030 3039 3830 3030 3030 3030 3030 0d0a
+
+
+segdread: there are 504 channels
+
+segdread: 
+********************************
+segd_dem_trace_header (20 bytes)
+********************************
+
+
+segdread: file number: 1061
+
+segdread: 	scan type: 92, channel set: 12
+
+
+segdread: trace_number: 9420
+
+segdread: 	first timing word: 48120
+
+
+segdread: trace header extension: 0
+
+segdread: 	sample skew: 0
+
+segdread: 	trace edit: 0
+
+
+segdread: time break window: 000000
+
+
+segdread: extended channel set number: 046
+
+segdread: 	extended file number: 106540
+
+
+segdread: scan_type=91
+
+segdread: chan_set=91

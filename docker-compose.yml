@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  seisunix:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: seisunix:latest
+    container_name: seisunix_app
+
+    # Mount folder lokal ke dalam container
+    volumes:
+      - ./data:/data        # taruh file SEG-D kamu di sini
+      - ./output:/output    # hasil output akan tersimpan di sini
+
+    # Untuk X11 GUI (Linux host)
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - ./data:/data
+      - ./output:/output
+      - /tmp/.X11-unix:/tmp/.X11-unix   # X11 socket (Linux)
+
+    # Jalankan container secara interaktif
+    stdin_open: true
+    tty: true
+
+    # Tetap hidup
+    command: /bin/bash
