@@ -1,6 +1,6 @@
 # SEGD to SEG-Y Batch Converter
 
-A standalone, high-performance utility designed to convert raw **SEG-D** seismic data into the standard **SEG-Y (Big-Endian)** format. Engineered for speed and reliability, this tool utilizes Python's multiprocessing capabilities to execute batch conversions across thousands of files simultaneously.
+A standalone to convert raw **SEG-D** seismic data into the standard **SEG-Y (Big-Endian)** format. Engineered for speed and reliability, this tool utilizes Python's multiprocessing capabilities to execute batch conversions across thousands of files simultaneously.
 
 ## Key Features
 
