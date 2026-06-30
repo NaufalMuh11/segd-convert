@@ -1,6 +1,6 @@
 # SEGD to SEG-Y Batch Converter
 
-A standalone, high-performance utility designed to convert raw **SEG-D** seismic data into the standard **SEG-Y (Big-Endian)** format. Engineered for speed and reliability, this tool utilizes Python's multiprocessing capabilities to execute batch conversions across thousands of files simultaneously.
+A standalone to convert raw **SEG-D** seismic data into the standard **SEG-Y (Big-Endian)** format. Engineered for speed and reliability, this tool utilizes Python's multiprocessing capabilities to execute batch conversions across thousands of files simultaneously.
 
 ## Key Features
 
@@ -17,16 +17,16 @@ A standalone, high-performance utility designed to convert raw **SEG-D** seismic
 ### Option 1: Standalone Executable (Recommended)
 No Python installation or programming experience is required.
 
-1. Navigate to the [Releases](https://github.com/NaufalMuh11/segd-shifter/releases) section of this repository.
-2. Download the `segd-shifter.exe` binary directly from the **Assets** section (or download the ZIP if provided).
+1. Navigate to the [Releases](https://github.com/NaufalMuh11/segd-convert/releases) section of this repository.
+2. Download the `segd-convert.exe` binary directly from the **Assets** section (or download the ZIP if provided).
 3. The executable is ready to use immediately on any Windows environment—no extraction or installation needed!
 
 ### Option 2: Source Code (For Developers)
 To run the source code or build the executable manually:
 
 ```bash
-git clone https://github.com/NaufalMuh11/segd-shifter.git
-cd segd-shifter
+git clone https://github.com/NaufalMuh11/segd-convert.git
+cd segd-convert
 ```
 *(Requires Python 3.8+)*
 
